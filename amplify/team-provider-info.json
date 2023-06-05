@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "ivsf982a903": {}
+      },
+      "function": {
+        "chatToken": {
+          "deploymentBucketName": "amplify-ivs-dev-124047-deployment",
+          "s3Key": "amplify-builds/chatToken-63572f42625a434e6e6a-build.zip"
+        }
       }
     }
   }
