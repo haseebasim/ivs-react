@@ -9,6 +9,7 @@ import awsconfig from "./aws-exports"
 import "@aws-amplify/ui-react/styles.css"
 import "./App.css"
 import { useMemo } from "react"
+import Watch from "./views/Watch"
 
 Amplify.configure(awsconfig)
 
@@ -23,6 +24,11 @@ function App({ signOut, user }) {
         {
           path: "/stream/:channel_name",
           element: <Stream user={user} signOut={signOut} />,
+          loader: streamLoader,
+        },
+        {
+          path: "/watch/:channel_name",
+          element: <Watch user={user} signOut={signOut} />,
           loader: streamLoader,
         },
       ]),
