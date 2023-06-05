@@ -1,22 +1,35 @@
-import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./views/Home";
-import Stream, { loader as streamLoader } from "./views/Stream";
+import { Amplify } from "aws-amplify"
+import { withAuthenticator } from "@aws-amplify/ui-react"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Home from "./views/Home"
+import Stream, { loader as streamLoader } from "./views/Stream"
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/stream/:channel_name",
-    element: <Stream />,
-    loader: streamLoader,
-  },
-]);
+import awsconfig from "./aws-exports"
 
-function App() {
-  return <RouterProvider router={router} />;
+import "@aws-amplify/ui-react/styles.css"
+import "./App.css"
+import { useMemo } from "react"
+
+Amplify.configure(awsconfig)
+
+function App({ signOut, user }) {
+  const router = useMemo(
+    () =>
+      createBrowserRouter([
+        {
+          path: "/",
+          element: <Home user={user} signOut={signOut} />,
+        },
+        {
+          path: "/stream/:channel_name",
+          element: <Stream user={user} signOut={signOut} />,
+          loader: streamLoader,
+        },
+      ]),
+    [user, signOut]
+  )
+  console.log(user)
+  return <RouterProvider router={router} />
 }
 
-export default App;
+export default withAuthenticator(App)
